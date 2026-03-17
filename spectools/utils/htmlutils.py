@@ -5,6 +5,7 @@ import json
 
 INDENT_SIZE = 3
 DIFF_ELEMENT = 'metadiff'
+PRESERVE_SPACE_ATTRIBUTE = 'preserve-space'
 
 class DiffElementContentHandler(xml.sax.handler.ContentHandler):
     def __init__(self, diffs_use_divs, *args, **kwargs):
@@ -74,6 +75,8 @@ class XMLAugmenter(DiffElementContentHandler):
         if element_obj:
             attribute_objs = element_obj.get_attributes()
         for k, v in attrs.items():
+            if k == PRESERVE_SPACE_ATTRIBUTE:
+                continue
             start_tag = ''
             end_tag = ''
             if element_obj:
@@ -102,7 +105,7 @@ class XMLAugmenter(DiffElementContentHandler):
             attr_string = self.get_attribute_markup(obj, attrs)
         else:
             attr_string = ''
-        self.preserve_whitespace = attrs.get('xml:space', '') == 'preserve'
+        self.preserve_whitespace = attrs.get('xml:space', '') == 'preserve' or attrs.get(PRESERVE_SPACE_ATTRIBUTE) == 'true'
         space = ' ' * len(self.element_stack) * INDENT_SIZE
         diff_html = self.get_pending_diff_markup()
         self.result.append(f'{diff_html}{space}&lt;{start_tag}{name}{end_tag}{attr_string}&gt;')
