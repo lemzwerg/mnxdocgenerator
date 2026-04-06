@@ -3,8 +3,8 @@
 This is a Django app used to generate the documentation
 for the following W3C music notation formats:
 
-* [MNX](https://w3c.github.io/mnx/docs/)
-* [MusicXML](https://w3c.github.io/musicxml/)
+* [MNX](https://w3c-cg.github.io/mnx/docs/)
+* [MusicXML](https://w3c-cg.github.io/musicxml/)
 
 It consists of the following:
 
